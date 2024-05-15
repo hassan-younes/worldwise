@@ -1,0 +1,52 @@
+.nav {
+  display: flex;
+  justify-content: space-between;
+  list-style: none;
+  width: 20rem;
+  position: relative;
+}
+.li {
+  font-size: 1.5rem;
+  font-weight: 600;
+  color: white;
+  text-decoration: none;
+}
+.nav :global(.active) {
+  color: #00c46a;
+}
+.active {
+  background-color: #00c46a;
+  color: rgb(0, 0, 0) !important;
+  font-size: 1.5rem;
+  font-weight: 600;
+  text-decoration: none;
+  padding: 5px 7px;
+  border-radius: 5px;
+}
+.btn {
+  display: none;
+}
+@media screen and (max-width: 700px) {
+  .nav {
+    display: flex;
+    justify-content: space-between;
+    list-style: none;
+    width: 17rem;
+    position: relative;
+  }
+  .li {
+    font-size: 1.2rem;
+    font-weight: 600;
+    color: white;
+    text-decoration: none;
+  }
+  .active {
+    background-color: #00c46a;
+    color: rgb(0, 0, 0) !important;
+    font-size: 1.2rem;
+    font-weight: 600;
+    text-decoration: none;
+    padding: 4px 6px;
+    border-radius: 5px;
+  }
+}
