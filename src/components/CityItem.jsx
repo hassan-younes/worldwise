@@ -20,7 +20,7 @@ export default function CityItem({ city }) {
     >
       <Link
         className={styles.link}
-        to={`${id}?lat=${position.lat}&lng=${position.lng}`}
+        to={`${id}?lat=${JSON.parse(position).lat}&lng=${JSON.parse(position).lng}`}
       >
         <img
           src={`https://flagcdn.com/20x15/${emoji}.png`}

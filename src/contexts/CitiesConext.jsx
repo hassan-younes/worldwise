@@ -1,5 +1,5 @@
 import { createContext, useContext, useEffect, useState } from "react";
-
+import { getcities } from "../../supabase/Citiesapi";
 const CitiesContext = createContext();
 const BASE_URL = "http://localhost:9000";
 function CitiesProvider({ children }) {
@@ -14,8 +14,10 @@ function CitiesProvider({ children }) {
       setIsloading(true);
       async function fetechcity() {
         try {
-          const res = await fetch(`${BASE_URL}/cities`);
-          const data = await res.json();
+          
+          // const res = await fetch(`${BASE_URL}/cities`);
+          // const data = await res.json();
+          const data=getcities();
           setCities(data);
         } catch {
           alert("There was an error loading data");
