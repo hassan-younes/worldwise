@@ -2,8 +2,9 @@ import styles from "./City.module.css";
 import ButtonBack from "./Button";
 import { useNavigate, useParams } from "react-router-dom";
 import { useCities } from "../contexts/CitiesConext";
-
 import Spinner from "./Spinner";
+
+let city=""
 const formatDate = (date) =>
   new Intl.DateTimeFormat("en", {
     day: "numeric",
@@ -11,13 +12,15 @@ const formatDate = (date) =>
     year: "numeric",
   }).format(new Date(date));
 
-function City() {
-  const { currentCity, isLoading, getCity } = useCities();
+ function City() {
+  const {  isLoading,getCity } = useCities();
   const { id } = useParams();
-  getCity(id);
-  const navigate = useNavigate();
+  getCity(id).then(x=>{city =x})
 
-  const { cityName, emoji, date, notes } = currentCity;
+  console.log(city)
+  const navigate = useNavigate();
+ 
+  const { cityName, emoji, date, notes } = city;
   if (isLoading) return <Spinner />;
   return (
     <div className={styles.city}>

@@ -1,63 +1,49 @@
 import { createContext, useContext, useEffect, useState } from "react";
-import { getcities } from "../../supabase/Citiesapi";
+import { getcities,pushCity,deleteCity,getCity } from "../../supabase/Citiesapi";
 const CitiesContext = createContext();
-const BASE_URL = "http://localhost:9000";
+
 function CitiesProvider({ children }) {
   const [currentCity, setCurrentCity] = useState({
     position: { lat: 38.727881642324164, lng: -9.140900099907554 },
   });
   const [cities, setCities] = useState([]);
+
   const [isLoading, setIsloading] = useState(false);
 
   useEffect(
     function () {
       setIsloading(true);
-      async function fetechcity() {
+      async function fetchcities() {
         try {
           
           // const res = await fetch(`${BASE_URL}/cities`);
           // const data = await res.json();
-          const data=getcities();
-          setCities(data);
+
+          const data= await getcities();
+          
+          setCities(data)
         } catch {
           alert("There was an error loading data");
         } finally {
           setIsloading(false);
         }
+        
       }
 
-      fetechcity();
+      fetchcities();
     },
 
     [setCities]
   );
+ 
 
-  async function getCity(id) {
-    setIsloading(true);
-    try {
-      const res = await fetch(`${BASE_URL}/cities/${id}`);
-      const data = await res.json();
-      setCurrentCity(data);
-      console.log(data);
-    } catch {
-      throw new Error("there was a problem in fetching data from server");
-    } finally {
-      setIsloading(false);
-    }
-  }
-
+  
   async function createCity(newCity) {
     setIsloading(true);
     try {
-      const res = await fetch(`${BASE_URL}/cities`, {
-        method: "POST",
-        body: JSON.stringify(newCity),
-        headers: {
-          "content-Type": "application/json",
-        },
-      });
-      const data = await res.json();
-      setCities((cities) => [...cities, data]);
+       await pushCity(newCity);
+       const data= await getcities();
+      setCities(data);
     } catch {
       throw new Error("there was a problem in fetching data from server");
     } finally {
@@ -67,9 +53,7 @@ function CitiesProvider({ children }) {
   async function onRemove(id) {
     setIsloading(true);
     try {
-      await fetch(`${BASE_URL}/cities/${id}`, {
-        method: "DELETE",
-      });
+     await deleteCity(id)
 
       setCities((cities) => cities.filter((city) => city.id !== id));
     } catch {
@@ -81,13 +65,14 @@ function CitiesProvider({ children }) {
   const value = {
     cities,
     isLoading,
+   
     setIsloading,
     setCities,
     onRemove,
     currentCity,
     setCurrentCity,
     createCity,
-    getCity,
+    getCity
   };
   return (
     <CitiesContext.Provider value={value}>{children}</CitiesContext.Provider>

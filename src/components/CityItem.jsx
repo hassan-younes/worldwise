@@ -12,6 +12,7 @@ const formatDate = (date) =>
 export default function CityItem({ city }) {
   const { cityName, position, id, date, emoji } = city;
   const { currentCity, onRemove } = useCities();
+
   return (
     <li
       className={`${styles.cityItem} ${
@@ -20,7 +21,7 @@ export default function CityItem({ city }) {
     >
       <Link
         className={styles.link}
-        to={`${id}?lat=${JSON.parse(position).lat}&lng=${JSON.parse(position).lng}`}
+        to={`${id}?lat=${position.lat}&lng=${position.lng}`}
       >
         <img
           src={`https://flagcdn.com/20x15/${emoji}.png`}

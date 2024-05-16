@@ -16,7 +16,7 @@ function Form() {
   const navigate = useNavigate();
   const [lat, lng] = useUrlPosition();
   const [emoji, country, cityName, setCityName] = CountryCodeResolver(lat, lng);
-  console.log([emoji, country, cityName, setCityName]);
+
 
   async function handleSubmit(e) {
     e.preventDefault();
@@ -27,7 +27,7 @@ function Form() {
       emoji,
       date,
       notes,
-      position: { lat, lng },
+      position: { lat:lat, lng:lng },
       id: lat,
     };
     await createCity(newCity);
